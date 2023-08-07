@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app-01
+        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/demoapp1:#{Build.BuildId}#
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9091
+      - name: demo-app-02
+        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/demoapp2:#{Build.BuildId}#
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9092  
+# service type loadbalancer       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: demo-app
+    k8s-app: demo-app
+  name: demo-app
+spec:
+  type: LoadBalancer
+  ports:
+  - name: demoapp1
+    port: 90
+    protocol: TCP
+    targetPort: 9091
+   - name: demoapp2
+    port: 90
+    protocol: TCP
+    targetPort: 9092
+  selector:
+    app: demo-app
