@@ -1,47 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-app-deployment
+  name: ioms-poc-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: demo-app
+      app: ioms-poc
   template:
     metadata:
       labels:
-        app: demo-app
+        app: ioms-poc
     spec:
       containers:
-      - name: demo-app-01
-        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/demoapp1:#{Build.BuildId}#
+      - name: ioms-milestoneupdate-app
+        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/iomsmilestoneupdatepoc:#{Build.BuildId}#
         imagePullPolicy: Always
         ports:
-        - containerPort: 9091
-      - name: demo-app-02
-        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/demoapp2:#{Build.BuildId}#
+        - containerPort: 8086
+      - name: wms-courierstub-app
+        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/wmscourierstub:#{Build.BuildId}#
         imagePullPolicy: Always
         ports:
-        - containerPort: 9092  
+        - containerPort: 8087 
 # service type loadbalancer       
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: demo-app
-    k8s-app: demo-app
-  name: demo-app
+    app: ioms-poc
+    k8s-app: ioms-poc
+  name: ioms-poc
 spec:
   type: LoadBalancer
   ports:
-  - name: demoapp1
-    port: 90
+  - name: milestoneupdate
+    port: 81
     protocol: TCP
-    targetPort: 9091
-  - name: demoapp2
-    port: 91
+    targetPort: 8086
+  - name: wmscourierstub
+    port: 87
     protocol: TCP
-    targetPort: 9092
+    targetPort: 8087
   selector:
-    app: demo-app
+    app: ioms-poc-app
