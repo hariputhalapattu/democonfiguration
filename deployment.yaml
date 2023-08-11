@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
       - name: ioms-milestoneupdate-app
-        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/iomsmilestoneupdatepoc:#{Build.BuildId}#
+        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/iomsmilestoneupdatepoc:LATEST
         imagePullPolicy: Always
         ports:
         - containerPort: 8086
       - name: wms-courierstub-app
-        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/wmscourierstub:#{Build.BuildId}#
+        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/wmscourierstub:LATEST
         imagePullPolicy: Always
         ports:
         - containerPort: 8087 
