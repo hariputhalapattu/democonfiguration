@@ -44,4 +44,4 @@ spec:
     protocol: TCP
     targetPort: 8087
   selector:
-    app: ioms-poc-app
+    app: ioms-poc
