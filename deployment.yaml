@@ -13,16 +13,16 @@ spec:
         app: ioms-poc
     spec:
       containers:
-      - name: ioms-milestoneupdate-app
-        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/iomsmilestoneupdatepoc:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8086
       - name: wms-courierstub-app
         image: myacrpocrepo010823.azurecr.io/hariputhalapattu/wmscourierstub:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8087 
+      - name: ioms-milestoneupdate-app
+        image: myacrpocrepo010823.azurecr.io/hariputhalapattu/iomsmilestoneupdatepoc:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8086
 # service type loadbalancer       
 ---
 apiVersion: v1
@@ -35,13 +35,13 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - name: milestoneupdate
-    port: 81
-    protocol: TCP
-    targetPort: 8086
   - name: wmscourierstub
     port: 87
     protocol: TCP
     targetPort: 8087
+  - name: milestoneupdate
+    port: 81
+    protocol: TCP
+    targetPort: 8086
   selector:
     app: ioms-poc
